@@ -12,8 +12,10 @@ app.post('weebhook', express.json, function (req, res) {
   console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
  
   function welcome(agent) {
-    
     agent.add(`Hola bienvenido a CySe-Net, ¿Como puedo ayudarte?`);
+  }
+  function webhookPrueba(agent) {
+    agent.add(`Hola desde el webhook`);
   }
  
   // function fallback(agent) {
@@ -23,6 +25,7 @@ app.post('weebhook', express.json, function (req, res) {
 
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
+  intentMap.set('webhookPrueba', webhookPrueba);
   // intentMap.set('Default Fallback Intent', fallback);
 
   agent.handleRequest(intentMap);
