@@ -9,8 +9,10 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
-app.post('/webhook', express.json, function (req, res) {
-  const agent = new WebhookClient({ request:req, response:res });
+
+
+app.get('/webhook', express.json, function (req, res) {
+  const agent = new WebhookClient({ request: req, response: res });
   console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
   console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
  
