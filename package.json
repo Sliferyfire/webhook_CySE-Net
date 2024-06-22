@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "dialogflow-fulfillment": "^0.6.1",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "firebase-functions": "^5.0.1"
   }
 }

@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
+const functions = require('firebase-functions');
 const {WebhookClient} = require('dialogflow-fulfillment');
+const {Card, Suggestion} = require('dialogflow-fulfillment');
+const { log } = require('firebase-functions/logger');
 
 app.get('/', function (req, res) {
   res.send('Hello World')
@@ -12,10 +15,12 @@ app.post('weebhook', express.json, function (req, res) {
   console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
  
   function welcome(agent) {
+    console.log('default welcome intent');
     agent.add(`Hola bienvenido a CySe-Net, ¿Como puedo ayudarte?`);
   }
   function webhookPrueba(agent) {
-    agent.add(`Hola desde el webhook`);
+    console.log('webhook prueba');
+    agent.add(`Hola desde el webhook`); 
   }
  
   // function fallback(agent) {
