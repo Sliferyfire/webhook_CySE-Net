@@ -63,7 +63,7 @@ app.post('/webhook', express.json(), function (req, res) {
     const info = await transporter.sendMail(mensaje);
     console.log(info);
 
-    agent.add(`Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
+    agent.add(`Mantenimiento ${tipoMantenimiento} agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
     agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
     const payloadJson = {
       "richContent": [
