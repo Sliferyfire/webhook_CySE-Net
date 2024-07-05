@@ -47,22 +47,22 @@ app.post('/webhook', express.json(), function (req, res) {
     const locationOriginal = context.parameters['location.original'];
     const dateTimeOriginal = context.parameters['date-time.original'][0];
     console.log(`Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
-    // const payloadJson = {
-    //   "richContent": [
-    //     [
-    //       {
-    //         "type": "description",
-    //         "title": "Computacion y servicio",
-    //         "text": [
-    //           "Telefono: 4271090104",
-    //           "Email: servicio@computacionyservicio.mx"
-    //         ]
-    //       }
-    //     ]
-    //   ]
-    // };
-    agent.add(`Webhook: Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
-    // agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
+    const payloadJson = {
+      "richContent": [
+        [
+          {
+            "type": "description",
+            "title": "Computacion y servicio",
+            "text": [
+              "Telefono: 4271090104",
+              "Email: servicio@computacionyservicio.mx"
+            ]
+          }
+        ]
+      ]
+    };
+    // agent.add(`Webhook: Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
+    agent.add(new Payload(agent.PLATFORM_UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
  
   // function fallback(agent) {
