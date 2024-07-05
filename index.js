@@ -7,10 +7,11 @@ const { log } = require('firebase-functions/logger');
 const nodemailer = require('nodemailer');
 
 let transporter = nodemailer.createTransport({
-  service: 'gmail', // Puedes usar cualquier servicio de correo (e.g., 'yahoo', 'hotmail', 'smtp')
+  host: 'smtp.gmail.com',
+  port: 587,
   auth: {
     user: 'sliferyfire@gmail.com', // Tu correo electrónico
-    pass: 'aaronpro' // Tu contraseña (o mejor, una contraseña de aplicación)
+    pass: 'srdf uydo wctw yzsj' // Tu contraseña (o mejor, una contraseña de aplicación)
   }
 });
 
@@ -47,24 +48,19 @@ app.post('/webhook', express.json(), function (req, res) {
     agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
 
-  function agendarMantenimientoCorreo(agent) {
+  async function agendarMantenimientoCorreo(agent) {
     const context = agent.context.get('horamantenimiento');
     const locationOriginal = context.parameters['location.original'];
     const dateTimeOriginal = context.parameters['date-time.original'][0];
     // console.log(`Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
-    let mailOptions = {
+    let mensaje = {
       from: 'sliferyfire@gmail.com',
       to: 'sliferyfire@gmail.com',
       subject: 'Agenda de mantenimiento',
       text: 'Manetnimiento en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
-      // html: '<h1>Contenido del correo en HTML</h1>'
     };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log('Correo enviado: ' + info.response);
-    });
+    const info = await transporter.sendMail(mensaje);
+    console.log(info);
 
     agent.add(`Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
     agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
