@@ -22,26 +22,26 @@ app.post('/webhook', express.json(), function (req, res) {
   function webhookPrueba(agent) {
     // console.log('webhook prueba');
     agent.add(`Hola desde el webhook`); 
-    agent.add(`Hola desde el webhook 2`); 
+    // agent.add(`Hola desde el webhook 2`); 
     
-    // const payloadJson = {
-    //   "richContent": [
-    //     [
-    //       {
-    //         "type": "description",
-    //         "title": "Computacion y servicio 🖥️",
-    //         "text": [
-    //           `Mantenimiento agendado para:`,
-    //           `Ubicación:`,
-    //           "Telefono: 4271090104",
-    //           "Email: servicio@computacionyservicio.mx"
-    //         ]
-    //       }
-    //     ]
-    //   ]
-    // };
+    const payloadJson = {
+      "richContent": [
+        [
+          {
+            "type": "description",
+            "title": "Computacion y servicio 🖥️",
+            "text": [
+              `Mantenimiento agendado para:`,
+              `Ubicación:`,
+              "Telefono: 4271090104",
+              "Email: servicio@computacionyservicio.mx"
+            ]
+          }
+        ]
+      ]
+    };
     // const payload = new Payload(agent.WEB, payloadJson, { rawPayload: true, sendAsMessage: true });
-    // agent.add(payload);
+    agent.add(new Payload(agent.WEB, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
 
   function agendarMantenimientoCorreo(agent) {
