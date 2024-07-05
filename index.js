@@ -27,9 +27,24 @@ app.post('/webhook', express.json(), function (req, res) {
   function agendarMantenimientoCorreo(agent) {
     const horaMantenimiento = agent.parameters['horaMantenimiento']['date-time']['original'];
     const location = agent.parameters['horaMantenimiento']['location']['original'];
-
     console.log(`Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
-    agent.add(`Webhook: Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
+    const payloadJson = {
+      "richContent": [
+        [
+          {
+            "type": "description",
+            "text": [
+              `Mantenimiento agendado para: ${horaMantenimiento}`,
+              `Ubicación: ${location}`,
+              "Telefono: 4271090104",
+              "Email: servicio@computacionyservicio.mx"
+            ],
+            "title": "Computacion y servicio 🖥️"
+          }
+        ]
+      ]
+    };
+    agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
  
   // function fallback(agent) {
