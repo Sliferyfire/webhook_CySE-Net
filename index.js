@@ -25,8 +25,9 @@ app.post('/webhook', express.json(), function (req, res) {
   }
 
   function agendarMantenimientoCorreo(agent) {
-    const horaMantenimiento = agent.parameters['horaMantenimiento']['date-time']['original'];
-    const location = agent.parameters['horaMantenimiento']['location']['original'];
+    const parameters = agent.parameters;
+    const horaMantenimiento = parameters['horaMantenimiento']['date-time.original'];
+    const location = parameters['horaMantenimiento']['location.original'];
     console.log(`Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
     // const payloadJson = {
     //   "richContent": [
