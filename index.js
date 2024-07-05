@@ -33,17 +33,16 @@ app.post('/webhook', express.json(), function (req, res) {
         [
           {
             "type": "description",
+            "title": "Computacion y servicio",
             "text": [
-              `Mantenimiento agendado para: ${horaMantenimiento}`,
-              `Ubicación: ${location}`,
               "Telefono: 4271090104",
               "Email: servicio@computacionyservicio.mx"
-            ],
-            "title": "Computacion y servicio"
+            ]
           }
         ]
       ]
     };
+    agent.add(`Webhook: Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
     agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
  
