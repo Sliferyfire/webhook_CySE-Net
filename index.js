@@ -32,19 +32,46 @@ app.post('/webhook', express.json(), function (req, res) {
   function webhookPrueba(agent) {
     agent.add(`Hola desde el webhook`); 
     const payloadJson = {
-        "richContent": [
-          [
-            {
-              "type": "description",
-              "title": "Computacion y servicio",
-              "text": [
-                "Telefono: 4271090104",
-                "Email: servicio@computacionyservicio.mx"
-              ]
-            }
-          ]
+      "richContent": [
+        [
+          {
+            "type": "carousel",
+            "items": [
+              {
+                "info": {
+                  "key": "item1",
+                  "synonyms": [
+                    "Item 1"
+                  ]
+                },
+                "title": "Gato 1",
+                "description": "Gato 1",
+                "image": {
+                  "src": {
+                    "rawUrl": "https://st3.depositphotos.com/1594920/14721/i/1600/depositphotos_147217377-stock-photo-european-cat-sitting-isolated-on.jpg"
+                  }
+                }
+              },
+              {
+                "info": {
+                  "key": "item2",
+                  "synonyms": [
+                    "Item 2"
+                  ]
+                },
+                "title": "Gato 2",
+                "description": "Gato 2",
+                "image": {
+                  "src": {
+                    "rawUrl": "https://cdn.pixabay.com/photo/2017/08/22/16/23/cat-2669554_1280.png"
+                  }
+                }
+              }
+            ]
+          }
         ]
-      };
+      ]
+    };
     agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
 
