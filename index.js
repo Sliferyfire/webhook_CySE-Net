@@ -22,20 +22,25 @@ app.post('/webhook', express.json(), function (req, res) {
   function webhookPrueba(agent) {
     // console.log('webhook prueba');
     // agent.add(`Hola desde el webhook`); 
-    const dfMessenger = document.querySelector('df-messenger');
-  const payload = [
-    {
-      "type": "info",
-      "title": "Info item title",
-      "subtitle": "Info item subtitle",
-      "image": {
-        "src": {
-          "rawUrl": "https://example.com/images/logo.png"
-        }
-      },
-      "actionLink": "https://example.com"
-    }];
-  dfMessenger.renderCustomCard(payload);
+    
+    const payloadJson = {
+      "richContent": [
+        [
+          {
+            "type": "description",
+            "title": "Computacion y servicio 🖥️",
+            "text": [
+              `Mantenimiento agendado para:`,
+              `Ubicación:`,
+              "Telefono: 4271090104",
+              "Email: servicio@computacionyservicio.mx"
+            ]
+          }
+        ]
+      ]
+    };
+    const payload = new Payload(agent.WEB, payloadJson, { rawPayload: true, sendAsMessage: true });
+    agent.add(payload);
   }
 
   function agendarMantenimientoCorreo(agent) {
