@@ -9,20 +9,27 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
-
-
 app.post('/webhook', express.json(), function (req, res) {
   const agent = new WebhookClient({ request: req, response: res });
   console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
   console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
  
   function welcome(agent) {
-    console.log('default welcome intent');
+    // console.log('default welcome intent');
     agent.add(`Hola bienvenido a CySe-Net, ¿Como puedo ayudarte?`);
   }
+  
   function webhookPrueba(agent) {
-    console.log('webhook prueba');
+    // console.log('webhook prueba');
     agent.add(`Hola desde el webhook`); 
+  }
+
+  function agendarMantenimientoCorreo(agent) {
+    const horaMantenimiento = agent.parameters['horaMantenimiento']['date-time']['original'];
+    const location = agent.parameters['horaMantenimiento']['location']['original'];
+
+    console.log(`Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
+    agent.add(`Webhook: Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
   }
  
   // function fallback(agent) {
@@ -33,7 +40,7 @@ app.post('/webhook', express.json(), function (req, res) {
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('webhookPrueba', webhookPrueba);
-  // intentMap.set('Default Fallback Intent', fallback);
+  intentMap.set('agendarMantenimientoCorreo', agendarMantenimientoCorreo);
 
   agent.handleRequest(intentMap);
   })
