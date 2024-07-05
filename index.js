@@ -52,12 +52,13 @@ app.post('/webhook', express.json(), function (req, res) {
     const context = agent.context.get('horamantenimiento');
     const locationOriginal = context.parameters['location.original'];
     const dateTimeOriginal = context.parameters['date-time.original'][0];
+    const tipoMantenimiento = context.parameters['tipoMantenimiento'];
     // console.log(`Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
     let mensaje = {
       from: 'sliferyfire@gmail.com',
       to: 'sliferyfire@gmail.com',
       subject: 'Agenda de mantenimiento',
-      text: 'Manetnimiento en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
+      text: 'Manetnimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
     };
     const info = await transporter.sendMail(mensaje);
     console.log(info);
