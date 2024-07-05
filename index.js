@@ -25,10 +25,10 @@ app.post('/webhook', express.json(), function (req, res) {
   }
 
   function agendarMantenimientoCorreo(agent) {
-    const parameters = agent.parameters;
-    const horaMantenimiento = parameters['horaMantenimiento']['date-time.original'];
-    const location = parameters['horaMantenimiento']['location.original'];
-    console.log(`Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
+    const context = agent.context.get('horamantenimiento');
+    const locationOriginal = context.parameters['location.original'];
+    const dateTimeOriginal = context.parameters['date-time.original'][0];
+    console.log(`Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
     // const payloadJson = {
     //   "richContent": [
     //     [
@@ -43,7 +43,7 @@ app.post('/webhook', express.json(), function (req, res) {
     //     ]
     //   ]
     // };
-    agent.add(`Webhook: Mantenimiento agendado para: ${horaMantenimiento} en ${location}`);
+    agent.add(`Webhook: Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
     // agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
  
