@@ -39,7 +39,7 @@ app.post('/webhook', express.json(), function (req, res) {
               "Telefono: 4271090104",
               "Email: servicio@computacionyservicio.mx"
             ],
-            "title": "Computacion y servicio 🖥️"
+            "title": "Computacion y servicio"
           }
         ]
       ]
