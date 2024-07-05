@@ -39,7 +39,7 @@ app.post('/webhook', express.json(), function (req, res) {
         ]
       };
     // const payload = new Payload(agent.WEB, payloadJson, { rawPayload: true, sendAsMessage: true });
-    agent.add(new Payload(agent.WEB, payloadJson, { rawPayload: true, sendAsMessage: true }));
+    agent.add(new Payload(agent.ACTIONS_ON_GOOGLE, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
 
   function agendarMantenimientoCorreo(agent) {
@@ -62,7 +62,7 @@ app.post('/webhook', express.json(), function (req, res) {
       ]
     };
     // agent.add(`Webhook: Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
-    agent.add(new Payload(agent.PLATFORM_UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
+    agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
   }
  
   // function fallback(agent) {
