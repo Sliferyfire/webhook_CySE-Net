@@ -5,6 +5,7 @@
 *.exe
 *.dll
 *.so
+.env
 
 # Ignore build output directories
 /bin/

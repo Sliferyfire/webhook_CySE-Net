@@ -5,13 +5,17 @@ const {WebhookClient, Payload} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
 const { log } = require('firebase-functions/logger');
 const nodemailer = require('nodemailer');
+require('dotenv').config()
+
+const email = process.env.EMAIL;
+const pass = process.env.PASS;
 
 let transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   auth: {
-    user: 'sliferyfire@gmail.com', 
-    pass: 'srdf uydo wctw yzsj' 
+    user: email, 
+    pass: pass 
   }
 });
 
