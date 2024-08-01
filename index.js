@@ -14,8 +14,8 @@ async function buscarDireccion(direccion) {
 
   const response = await fetch(url, {
     headers: {
-      'User-Agent': 'webhook-CySeNet ' + email, // Reemplaza con el nombre y correo de tu aplicación
-      'Referer': 'https://computacionyservicio.mx/' // Puedes usar la URL de tu sitio web
+      'User-Agent': 'webhook-CySeNet ' + email, 
+      'Referer': 'https://computacionyservicio.mx/'
     }
   });
 
@@ -110,7 +110,6 @@ app.post('/webhook', express.json(), function (req, res) {
     const locationOriginal = context.parameters['location.original'];
     const dateTimeOriginal = context.parameters['date-time.original'][0];
     const tipoMantenimiento = context.parameters['tipoMantenimiento'];
-    // console.log(`Mantenimiento agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
     let mensaje = {
       from: email,
       to: email,
