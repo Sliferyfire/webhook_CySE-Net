@@ -60,7 +60,7 @@ app.post('/webhook', express.json(), function (req, res) {
   //-------------------------VALIDAR DIRECCION-------------------------
 
   function validarDireccion(agent) {
-    const context = agent.context.get('infoCliente');
+    const context = agent.context.get('infocliente');
     const direccion = context.parameters['address'];
     direccion = direccion + ', San Juan del Rio, Queretaro';
     console.log('Dirección: ', direccion);
