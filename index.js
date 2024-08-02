@@ -67,7 +67,7 @@ app.post('/webhook', (req, res) => {
     direccion = direccion + ', San Juan del Rio, Queretaro';
     console.log('Dirección: ', direccion);
 
-    buscarDireccion(direccion)
+    return buscarDireccion(direccion)
       .then((resultado) => {
         agent.add(`Gracias por proporcionar tu direccion.`);
         agent.add(`¿Ahora podrias decirme que dia te gustaria agendar tu mantenimiento?`);
