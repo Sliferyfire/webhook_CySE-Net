@@ -112,9 +112,6 @@ app.post('/webhook', (req, res) => {
     const contextName = agent.context.get('nombreCliente');
     const context = agent.context.get('infoCliente');
     const name = contextName.parameters['person'];
-    if (contextName.parameters['last-name']) {
-      const lastName = contextName.parameters['last-name'];
-    }
     const address = context.parameters['address'];
     const date = context.parameters['date'];
     const time = context.parameters['time'];
@@ -123,7 +120,7 @@ app.post('/webhook', (req, res) => {
       from: email,
       to: email,
       subject: 'Agenda de mantenimiento',
-      text: `Nombre del cliente: ${name} ${lastName}\nDireccion: ${address}\nFecha: ${date}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
+      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${date}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
       // text: 'Mantenimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
     };
     const info = await transporter.sendMail(mensaje);
