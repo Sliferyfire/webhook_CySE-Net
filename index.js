@@ -70,11 +70,11 @@ app.post('/webhook', (req, res) => {
     return buscarDireccion(direccion)
       .then((resultado) => {
         agent.add(`Gracias por proporcionar tu direccion.`);
-        agent.add(`¿Ahora podrias decirme que dia te gustaria agendar tu mantenimiento?`);
+        agent.add(`¿Ahora podrías decirme que día te gustaría agendar tu mantenimiento?`);
       })
       .catch((error) => {
         agent.add(`Lo siento pero no pude encontrar tu dirección.`);
-        agent.add(`Pudes intentar a ingresar nuevamente tu direccion, intenta escribir tambien el tipo de calle (calle, avenida, privada, etc).`);
+        agent.add(`Pudes intentar a ingresar nuevamente el nombre de tu calle, intenta escribir tambien el tipo de calle (calle, avenida, privada, etc).`);
         agent.add(`Recuerda que yo solo puedo atender en la ciudad de San Juan del Rio, Querétaro`);
         agent.add(`Si vives fuera de esta ciudad o tu direccion no es encontrada, te recomiendo hablar directamente con nuestro asesor.`);
         const payloadJson = {
@@ -145,7 +145,7 @@ app.post('/webhook', (req, res) => {
 
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
-  intentMap.set('usuarioPreguntaMantenimiento - calle', validarDireccion);
+  intentMap.set('agenda - calle', validarDireccion);
   intentMap.set('agendarMantenimientoCorreo', agendarMantenimientoCorreo);
 
   agent.handleRequest(intentMap);
