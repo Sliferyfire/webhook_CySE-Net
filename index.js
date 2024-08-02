@@ -118,12 +118,9 @@ app.post('/webhook', (req, res) => {
     const time = context.parameters['time'];
     const PhoneNumber = context.parameters['phone-number'];
 
-    const dateObject = new moment(date);
-    const dateOnly = dateObject.toISOString().split('T')[0];
-
-    const timeObject = new moment(time);
-    const timeString = timeObject.toISOString().split('T')[1]; // Esto te dará la parte de la hora
-    const timeOnly = timeString.split('.')[0];
+    const dateObject = new moment(time);
+    const dateOnly = dateObject.format('YYYY-MM-DD');
+    const timeOnly = dateObject.format('HH:mm:ss');
 
     let mensaje = {
       from: email,
