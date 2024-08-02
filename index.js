@@ -118,7 +118,7 @@ app.post('/webhook', (req, res) => {
     const time = context.parameters['time'];
     const PhoneNumber = context.parameters['phone-number'];
 
-    const dateObject = new moment(time);
+    const dateObject = moment.tz(dateTime, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Mexico_City');
     const dateOnly = dateObject.format('YYYY-MM-DD');
     const timeOnly = dateObject.format('HH:mm:ss');
 
