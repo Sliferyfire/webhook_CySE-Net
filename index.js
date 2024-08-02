@@ -109,8 +109,8 @@ app.post('/webhook', (req, res) => {
   //-------------------------ENVIAR CORREO-------------------------
 
   async function agendarMantenimientoCorreo(agent) {
-    const contextName = agent.context.get('nombreCliente');
-    const context = agent.context.get('infoCliente');
+    const contextName = agent.context.get('nombrecliente');
+    const context = agent.context.get('infocliente');
     const name = contextName.parameters['person'];
     const address = context.parameters['address'];
     const date = context.parameters['date'];
