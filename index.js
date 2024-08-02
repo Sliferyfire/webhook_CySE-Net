@@ -116,17 +116,25 @@ app.post('/webhook', (req, res) => {
     const date = context.parameters['date'];
     const time = context.parameters['time'];
     const PhoneNumber = context.parameters['phone-number'];
+
+    const dateObject = new Date(date);
+    const dateOnly = dateObject.toISOString().split('T')[0];
+
+    const timeObject = new Date(time);
+    const timeString = timeObject.toISOString().split('T')[1]; // Esto te dará la parte de la hora
+    const timeOnly = timeString.split('.')[0];
+
     let mensaje = {
       from: email,
       to: email,
       subject: 'Agenda de mantenimiento',
-      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${date}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
+      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${dateOnly}\nHora: ${timeOnly}\nTelefono de contacto: ${PhoneNumber}`,
       // text: 'Mantenimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
     };
     const info = await transporter.sendMail(mensaje);
     console.log(info);
 
-    agent.add(`Mantenimiento ${tipoMantenimiento} agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
+    agent.add(`Se ha agendado el mantenimiento para el día ${date} a las ${time}.`);
     agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
     const payloadJson = {
       "richContent": [
