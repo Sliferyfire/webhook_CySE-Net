@@ -109,15 +109,22 @@ app.post('/webhook', (req, res) => {
   //-------------------------ENVIAR CORREO-------------------------
 
   async function agendarMantenimientoCorreo(agent) {
-    const context = agent.context.get('horamantenimiento');
-    const locationOriginal = context.parameters['location.original'];
-    const dateTimeOriginal = context.parameters['date-time.original'][0];
-    const tipoMantenimiento = context.parameters['tipoMantenimiento'];
+    const contextName = agent.context.get('nombreCliente');
+    const context = agent.context.get('infoCliente');
+    const name = contextName.parameters['person'];
+    if (contextName.parameters['last-name']) {
+      const lastName = contextName.parameters['last-name'];
+    }
+    const address = context.parameters['address'];
+    const date = context.parameters['date'];
+    const time = context.parameters['time'];
+    const PhoneNumber = context.parameters['phone-number'];
     let mensaje = {
       from: email,
       to: email,
       subject: 'Agenda de mantenimiento',
-      text: 'Manetnimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
+      text: `Nombre del cliente: ${name} ${lastName}\nDireccion: ${address}\nFecha: ${date}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
+      // text: 'Mantenimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
     };
     const info = await transporter.sendMail(mensaje);
     console.log(info);
@@ -157,6 +164,39 @@ app.post('/webhook', (req, res) => {
   });
 
 
+
+  // async function agendarMantenimientoCorreo(agent) {
+  //   const context = agent.context.get('horamantenimiento');
+  //   const locationOriginal = context.parameters['location.original'];
+  //   const dateTimeOriginal = context.parameters['date-time.original'][0];
+  //   const tipoMantenimiento = context.parameters['tipoMantenimiento'];
+  //   let mensaje = {
+  //     from: email,
+  //     to: email,
+  //     subject: 'Agenda de mantenimiento',
+  //     text: 'Mantenimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
+  //   };
+  //   const info = await transporter.sendMail(mensaje);
+  //   console.log(info);
+
+  //   agent.add(`Mantenimiento ${tipoMantenimiento} agendado para: ${dateTimeOriginal} en ${locationOriginal}`);
+  //   agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
+  //   const payloadJson = {
+  //     "richContent": [
+  //       [
+  //         {
+  //           "type": "description",
+  //           "title": "Computacion y servicio",
+  //           "text": [
+  //             "Telefono: 4271090104",
+  //             "Email: servicio@computacionyservicio.mx"
+  //           ]
+  //         }
+  //       ]
+  //     ]
+  //   };
+  //   agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
+  // }
 
 
 
