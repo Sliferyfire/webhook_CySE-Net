@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const {WebhookClient, Payload} = require('dialogflow-fulfillment');
 const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
+const moment = require('moment-timezone');
 require('dotenv').config()
 
 const app = express().use(bodyParser.json());
@@ -117,10 +118,10 @@ app.post('/webhook', (req, res) => {
     const time = context.parameters['time'];
     const PhoneNumber = context.parameters['phone-number'];
 
-    const dateObject = new Date(date);
+    const dateObject = new moment(date);
     const dateOnly = dateObject.toISOString().split('T')[0];
 
-    const timeObject = new Date(time);
+    const timeObject = new moment(time);
     const timeString = timeObject.toISOString().split('T')[1]; // Esto te dará la parte de la hora
     const timeOnly = timeString.split('.')[0];
 
