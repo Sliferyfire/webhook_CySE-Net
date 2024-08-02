@@ -1,10 +1,11 @@
 const express = require('express')
-const app = express()
-const functions = require('firebase-functions');
+const bodyParser = require('body-parser');
 const {WebhookClient, Payload} = require('dialogflow-fulfillment');
 const nodemailer = require('nodemailer');
 const fetch = require('node-fetch');
 require('dotenv').config()
+
+const app = express().use(bodyParser.json());
 
 const email = process.env.EMAIL;
 const pass = process.env.PASS;
@@ -47,7 +48,7 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 
-app.post('/webhook', express.json(), function (req, res) {
+app.post('/webhook', (req, res) => {
   console.log('webhook');
   const agent = new WebhookClient({ request: req, response: res });
   console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
@@ -149,10 +150,10 @@ app.post('/webhook', express.json(), function (req, res) {
   agent.handleRequest(intentMap);
   })
 
-app.listen(3000,()=>{
-    console.log('Server is running on port 3000: http://localhost:3000/');
-
-})
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+  });
 
 
 
