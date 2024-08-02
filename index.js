@@ -112,22 +112,22 @@ app.post('/webhook', (req, res) => {
   async function agendarMantenimientoCorreo(agent) {
     const contextName = agent.context.get('nombrecliente');
     const context = agent.context.get('infocliente');
-    const name = contextName.parameters['person'];
+    const name = contextName.parameters['person.original'];
     const address = context.parameters['address'];
     const date = context.parameters['date'];
-    const time = context.parameters['time'];
+    const time = context.parameters['time.original'];
     const PhoneNumber = context.parameters['phone-number'];
 
-    const dateObject = moment.tz(date, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
-    const dateOnly = dateObject.format('YYYY-MM-DD');
-    const timeObject = moment.tz(time, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
-    const timeOnly = dateObject.format('HH:mm:ss');
+    // const dateObject = moment.tz(date, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
+    // const dateOnly = dateObject.format('YYYY-MM-DD');
+    // const timeObject = moment.tz(time, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
+    // const timeOnly = dateObject.format('HH:mm:ss');
 
     let mensaje = {
       from: email,
       to: email,
       subject: 'Agenda de mantenimiento',
-      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${dateOnly}\nHora: ${timeOnly}\nTelefono de contacto: ${PhoneNumber}`,
+      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${date}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
       // text: 'Mantenimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
     };
     const info = await transporter.sendMail(mensaje);
