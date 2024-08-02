@@ -52,8 +52,8 @@ app.get('/', function (req, res) {
 app.post('/webhook', (req, res) => {
   console.log('webhook');
   const agent = new WebhookClient({ request: req, response: res });
-  console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
-  console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
+  //console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
+  // console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
  
   function welcome(agent) {
     agent.add(`Hola bienvenido a CySe-Net, ¿Como puedo ayudarte?`);
@@ -63,7 +63,7 @@ app.post('/webhook', (req, res) => {
 
   function validarDireccion(agent) {
     const context = agent.context.get('infocliente');
-    const direccion = context.parameters['address'];
+    var direccion = context.parameters['address'];
     direccion = direccion + ', San Juan del Rio, Queretaro';
     console.log('Dirección: ', direccion);
 
