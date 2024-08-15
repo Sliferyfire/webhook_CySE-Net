@@ -164,7 +164,7 @@ app.post('/webhook', (req, res) => {
       from: email,
       to: email,
       subject: 'Agenda de mantenimiento',
-      text: `Nombre del cliente: ${name}\nTipo de equipo: ${tipoEquipo}\nFecha: ${dateOnly}\nPrecio ofrecido por el cliente: ${precio}\nTelefono de contacto: ${phoneNumber}`,
+      text: `Nombre del cliente: ${name}\nTipo de equipo: ${tipoEquipo}\nPrecio ofrecido por el cliente: ${precio}\nTelefono de contacto: ${phoneNumber}`,
     };
     const info = await transporter.sendMail(mensaje);
     console.log(info);
