@@ -107,7 +107,7 @@ app.post('/webhook', (req, res) => {
       });
   }
 
-  //-------------------------ENVIAR CORREO-------------------------
+  //-------------------------ENVIAR CORREO MANTENIMIENTO-------------------------
 
   async function agendarMantenimientoCorreo(agent) {
     const contextName = agent.context.get('nombrecliente');
@@ -118,8 +118,8 @@ app.post('/webhook', (req, res) => {
     const time = context.parameters['time.original'];
     const PhoneNumber = context.parameters['phone-number'];
 
-    // const dateObject = moment.tz(date, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
-    // const dateOnly = dateObject.format('YYYY-MM-DD');
+    const dateObject = moment.tz(date, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
+    const dateOnly = dateObject.format('YYYY-MM-DD');
     // const timeObject = moment.tz(time, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
     // const timeOnly = dateObject.format('HH:mm:ss');
 
@@ -127,14 +127,12 @@ app.post('/webhook', (req, res) => {
       from: email,
       to: email,
       subject: 'Agenda de mantenimiento',
-      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${date}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
-      // text: 'Mantenimiento ' + tipoMantenimiento + ' en la fecha y hora: ' + dateTimeOriginal + ' en ' + locationOriginal,
+      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${dateOnly}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
     };
     const info = await transporter.sendMail(mensaje);
     console.log(info);
 
-    agent.add(`Se ha agendado el mantenimiento para el día ${date} a las ${time}.`);
-    agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
+    agent.add(`Se ha agendado el mantenimiento para el día ${dateOnly} a las ${time}.`);
     const payloadJson = {
       "richContent": [
         [
@@ -150,6 +148,44 @@ app.post('/webhook', (req, res) => {
       ]
     };
     agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
+    agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
+  }
+
+  //-------------------------ENVIAR CORREO vENTA-------------------------
+
+  async function agendarMantenimientoCorreo(agent) {
+    const context = agent.context.get('infoventa');
+    const name = contextName.parameters['person.original'];
+    const precio = context.parameters['unit-currency.original'];
+    const tipoEquipo = context.parameters['tipoProducto'];
+    const phoneNumber = context.parameters['phone-number'];
+
+    let mensaje = {
+      from: email,
+      to: email,
+      subject: 'Agenda de mantenimiento',
+      text: `Nombre del cliente: ${name}\nTipo de equipo: ${tipoEquipo}\nFecha: ${dateOnly}\nPrecio ofrecido por el cliente: ${precio}\nTelefono de contacto: ${phoneNumber}`,
+    };
+    const info = await transporter.sendMail(mensaje);
+    console.log(info);
+
+    agent.add(`Muchas gracias, aquí tienes el contacto de nuestro asesor para proceder con la negociación`);
+    const payloadJson = {
+      "richContent": [
+        [
+          {
+            "text": [
+              "Telefono: 4271090104",
+              "Email: servicio@computacionyservicio.mx"
+            ],
+            "title": "Computacion y servicio 🖥️",
+            "type": "description"
+          }
+        ]
+      ]
+    };
+    agent.add(new Payload(agent.UNSPECIFIED, payloadJson, { rawPayload: true, sendAsMessage: true }));
+    agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
   }
 
   //-------------------------INTENT MAP-------------------------
