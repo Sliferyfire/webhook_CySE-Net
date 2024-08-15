@@ -151,9 +151,9 @@ app.post('/webhook', (req, res) => {
     agent.add(`Si necesita más ayuda, no dude en preguntar o comunicarse con un asesor.`);
   }
 
-  //-------------------------ENVIAR CORREO vENTA-------------------------
+  //-------------------------ENVIAR CORREO VENTA-------------------------
 
-  async function agendarMantenimientoCorreo(agent) {
+  async function ventaCorreo(agent) {
     const context = agent.context.get('infoventa');
     const name = contextName.parameters['person.original'];
     const precio = context.parameters['unit-currency.original'];
@@ -194,6 +194,7 @@ app.post('/webhook', (req, res) => {
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('agenda - calle', validarDireccion);
   intentMap.set('agendarMantenimientoCorreo', agendarMantenimientoCorreo);
+  intentMap.set('agenda-telefono', ventaCorreo);
 
   agent.handleRequest(intentMap);
   })
