@@ -155,7 +155,7 @@ app.post('/webhook', (req, res) => {
 
   async function ventaCorreo(agent) {
     const context = agent.context.get('infoventa');
-    const name = contextName.parameters['person.original'];
+    const name = context.parameters['person.original'];
     const precio = context.parameters['unit-currency.original'];
     const tipoEquipo = context.parameters['tipoProducto'];
     const phoneNumber = context.parameters['phone-number'];
