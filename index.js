@@ -114,20 +114,25 @@ app.post('/webhook', (req, res) => {
     const context = agent.context.get('infocliente');
     const name = contextName.parameters['person.original'];
     const address = context.parameters['address'];
+    const numeroExt = context.parameters['numberExt'];
+    if (context.parameters['numberInt'] != null) {
+      const numeroInt = context.parameters['numberInt'];
+    }
+    else {
+      const numeroInt = 'No aplica';
+    }
     const date = context.parameters['date'];
     const time = context.parameters['time.original'];
     const PhoneNumber = context.parameters['phone-number'];
 
     const dateObject = moment.tz(date, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
     const dateOnly = dateObject.format('YYYY-MM-DD');
-    // const timeObject = moment.tz(time, 'YYYY-MM-DDTHH:mm:ssZ', 'America/Denver');
-    // const timeOnly = dateObject.format('HH:mm:ss');
 
     let mensaje = {
       from: email,
       to: email,
       subject: 'Agenda de mantenimiento',
-      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nFecha: ${dateOnly}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
+      text: `Nombre del cliente: ${name}\nDireccion: ${address}\nNumero Exterior: ${numeroExt}\nNumero Interior: ${numeroInt}\nFecha: ${dateOnly}\nHora: ${time}\nTelefono de contacto: ${PhoneNumber}`,
     };
     const info = await transporter.sendMail(mensaje);
     console.log(info);
