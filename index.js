@@ -115,7 +115,7 @@ app.post('/webhook', (req, res) => {
     const name = contextName.parameters['person.original'];
     const address = context.parameters['address'];
     const numeroExt = context.parameters['numeroExt'];
-    let numeroInt = '';
+    var numeroInt = '';
     try {
       numeroInt = context.parameters['numeroInt'];
     }
