@@ -114,12 +114,13 @@ app.post('/webhook', (req, res) => {
     const context = agent.context.get('infocliente');
     const name = contextName.parameters['person.original'];
     const address = context.parameters['address'];
-    const numeroExt = context.parameters['numberExt'];
-    if (context.parameters['numberInt'] != null) {
-      const numeroInt = context.parameters['numberInt'];
+    const numeroExt = context.parameters['numeroExt'];
+    let numeroInt = '';
+    try {
+      numeroInt = context.parameters['numeroInt'];
     }
-    else {
-      const numeroInt = 'No aplica';
+    catch (error) {
+      numeroInt = 'No aplica';
     }
     const date = context.parameters['date'];
     const time = context.parameters['time.original'];
